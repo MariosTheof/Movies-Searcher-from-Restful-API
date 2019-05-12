@@ -11,10 +11,17 @@ window.onload = function(){
       // Retrieve json query
       var result = getData(urlForTitleAndPoster)
         .then( function(data) {
+          console.log(data);
+          var releasedClasses = document.getElementsByClassName("released");
+          var titleShowClasses = document.getElementsByClassName("titleShow");
+          var posterClasses = document.getElementsByClassName("poster");
+
           for (var i = 0; i < 10; i++){
             // Add Title and Poster to html
-            document.getElementById("titleShow"+ i + "").innerText = data.Search[i].Title;
-            document.getElementById("poster" + i + "").src = data.Search[i].Poster;
+            titleShowClasses[i].innerText = data.Search[i].Title;
+            posterClasses[i].src = data.Search[i].Poster;
+            releasedClasses[i].innerText = "Released : " + data.Search[i].Year;
+
           }
           return data;
         });
@@ -31,6 +38,8 @@ window.onload = function(){
           // Add plot summaries to html
           .then( function(data) {
               document.getElementById("text"+i+"").innerText = data.Plot;
+              var genreClasses = document.getElementsByClassName("genre");
+              genreClasses[i].innerText = data.Genre;
           });
         }
 
@@ -48,26 +57,25 @@ async function getData(url){
 }
 
 function addResponseToDivsInFrontEnd(buttonHasBeenPressedOnce){
-  if (!buttonHasBeenPressedOnce) {
+  if (!buttonHasBeenPressedOnce){
     for (var i = 0; i < 10; i++){
-      $("#myContainer").append(
-        $('<div/>').addClass("wrapper")
-           .append(
-             $('<div/>').addClass("content")
-               .append(
-                 $("<figure/>")
-                   .addClass("myimg")
-                   .append(
-                     $('<img src="http://placehold.it/250x200"/>')
-                     .attr("id","poster" + i + "")
-                   )
-               )
-               .append($("<h3/>").attr("id", "titleShow"+ i + ""))
-               .append($("<p/>").attr("id", "text"+i+""))    //εδώ να επιστρέφει την περιγραφή
-           )
-      )
+        $("#myContainer").append(
+          $("<div/>").addClass("container").append(
+            $("<div/>").addClass("box").append(
+              $("<figure/>").addClass("myimg").append(
+                $('<img src="http://placehold.it/250x200"/>').addClass("poster")
 
+              )
+              )
+              .append($("<h3/>").addClass("titleShow"))
+              .append($("<p/>").attr("id", "text"+i+""))
+               .append($("<span/>").addClass("released"))
+               .append($("<span/>").addClass("genre"))
+
+
+          )
+        )
     }
-
   }
+
 }

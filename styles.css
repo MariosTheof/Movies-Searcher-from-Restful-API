@@ -3,10 +3,48 @@
   margin: 15px 20px 0 0;
 }
 
+.myimg img {
+  max-width:200px;
+  max-height:200px;
+  display: inline-block;
+}
+
 .wrapper {
   border: 5px solid black;
 }
 
 .content {
   margin: 20px;
+}
+
+.container {
+  margin : 50px ;
+  position : relative;
+  height: 300px;
+  width: auto;
+}
+
+/* .container span {
+  position: absolute;
+  bottom: 0;
+} */
+.released {
+  position: absolute;
+  bottom: 0;
+}
+
+.genre {
+  position: absolute;
+  bottom: 0;
+  right : 30px;
+}
+
+.box {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  color: #4a4a4a;
+  display: block;
+  padding: 1.25rem;
+  height : 260px;
 }
