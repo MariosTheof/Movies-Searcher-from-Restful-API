@@ -2,6 +2,7 @@ window.onload = function(){
     var buttonHasBeenPressedOnce = false;
     document.getElementById("submit").onclick = function(){
       addResponseToDivsInFrontEnd(buttonHasBeenPressedOnce);
+      restoreButtonsIfGone();
       buttonHasBeenPressedOnce = true;
 
       var title = document.getElementById("movieTitle").value;
@@ -82,6 +83,23 @@ async function getData(url){
   return data;
 }
 
+function restoreButtonsIfGone(){
+  var boxClasses = document.getElementsByClassName("box");
+  for (var i =0 ; i < 10 ; i++){
+    if(! $("#button"+i+"").length){  $(boxClasses[i]).append($("<button>More</>").attr("id", "button"+i+"").attr("value", i).addClass("button")); }
+  }
+}
+
+
+function addElement(parentId, elementTag, elementId, html) {
+    // Adds an element to the document
+    var p = document.getElementById(parentId);
+    var p = document.getElementsByClassName(box);
+    var newElement = document.createElement(elementTag);
+    newElement.setAttribute('id', elementId);
+    newElement.innerHTML = html;
+    p.appendChild(newElement);
+}
 
 function addResponseToDivsInFrontEnd(buttonHasBeenPressedOnce){
   if (!buttonHasBeenPressedOnce){
