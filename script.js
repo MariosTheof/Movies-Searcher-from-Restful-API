@@ -90,7 +90,6 @@ function restoreButtonsIfGone(){
   }
 }
 
-
 function addElement(parentId, elementTag, elementId, html) {
     // Adds an element to the document
     var p = document.getElementById(parentId);
