@@ -44,8 +44,34 @@ window.onload = function(){
         }
 
 
+        document.getElementById("button0").addEventListener("click", function() { more(0); });
+        document.getElementById("button1").addEventListener("click", function() { more(1); });
+        document.getElementById("button2").addEventListener("click", function() { more(2); });
+        document.getElementById("button3").addEventListener("click", function() { more(3); });
+        document.getElementById("button4").addEventListener("click", function() { more(4); });
+        document.getElementById("button5").addEventListener("click", function() { more(5); });
+        document.getElementById("button6").addEventListener("click", function() { more(6); });
+        document.getElementById("button7").addEventListener("click", function() { more(7); });
+        document.getElementById("button8").addEventListener("click", function() { more(8); });
+        document.getElementById("button9").addEventListener("click", function() { more(9); });
 
     }
+}
+
+async function more( num ) {
+  var title = document.getElementById("movieTitle").value;
+  var urlForTitleAndPoster = "https://www.omdbapi.com/?s=" + title +"&page=5&apikey=640d2cde";
+
+  getData(urlForTitleAndPoster)
+    .then( function(data) {
+      var urlForFullPlotSummary = "https://www.omdbapi.com/?i=" + data.Search[num].imdbID + "&plot=full&apikey=640d2cde";
+      return getData(urlForFullPlotSummary);
+    })
+    .then( function(data){
+      document.getElementById("text"+num).innerText = data.Plot;
+    });
+    var element = document.getElementById("button"+num+"");
+    element.parentNode.removeChild(element);
 }
 
 async function getData(url){
@@ -55,6 +81,7 @@ async function getData(url){
 
   return data;
 }
+
 
 function addResponseToDivsInFrontEnd(buttonHasBeenPressedOnce){
   if (!buttonHasBeenPressedOnce){
@@ -71,6 +98,7 @@ function addResponseToDivsInFrontEnd(buttonHasBeenPressedOnce){
               .append($("<p/>").attr("id", "text"+i+""))
                .append($("<span/>").addClass("released"))
                .append($("<span/>").addClass("genre"))
+               .append($("<button>More</>").attr("id", "button"+i).attr("value", i).addClass("button"))
 
 
           )
