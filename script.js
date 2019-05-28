@@ -1,11 +1,24 @@
 window.onload = function(){
-    var buttonHasBeenPressedOnce = false;
-    document.getElementById("submit").onclick = function(){
-      addResponseToDivsInFrontEnd(buttonHasBeenPressedOnce);
-      restoreButtonsIfGone();
-      buttonHasBeenPressedOnce = true;
+    var hasSearched = false;
 
-      var title = document.getElementById("movieTitle").value;
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 3000;  //time in ms (5 seconds)
+    var userInput = document.getElementById('submit');
+
+    userInput.addEventListener('keyup', () => {
+      clearTimeout(typingTimer);
+      if (userInput.value) {
+          typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      }
+    });
+
+    function doneTyping() {
+
+      addResponseToDivsInFrontEnd(hasSearched);
+      restoreButtonsIfGone();
+      hasSearched = true;
+
+      var title = document.getElementById("submit").value;
 
       var urlForTitleAndPoster = "https://www.omdbapi.com/?s=" + title +"&page=5&apikey=640d2cde";
 
@@ -60,7 +73,7 @@ window.onload = function(){
 }
 
 async function more( num ) {
-  var title = document.getElementById("movieTitle").value;
+  var title = document.getElementById("submit").value;
   var urlForTitleAndPoster = "https://www.omdbapi.com/?s=" + title +"&page=5&apikey=640d2cde";
 
   getData(urlForTitleAndPoster)
@@ -100,8 +113,8 @@ function addElement(parentId, elementTag, elementId, html) {
     p.appendChild(newElement);
 }
 
-function addResponseToDivsInFrontEnd(buttonHasBeenPressedOnce){
-  if (!buttonHasBeenPressedOnce){
+function addResponseToDivsInFrontEnd(hasSearched){
+  if (!hasSearched){
     for (var i = 0; i < 10; i++){
         $("#myContainer").append(
           $("<div/>").addClass("container").append(
